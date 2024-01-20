@@ -1,0 +1,5 @@
+add functionality to website, set the structure/skeletion by today
+add css flexbox/grid for words to be typed out
+take in user key events and match to word, pass word if correct
+animation for user typing
+add redis db for leaderboards
