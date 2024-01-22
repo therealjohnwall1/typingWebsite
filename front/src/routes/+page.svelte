@@ -15,7 +15,9 @@
     import main_words from "$lib/words/top1kwords.txt"
 </script>
 
-
+<svelte:head>
+	<title> Typing Site</title>
+</svelte:head>
 <!-- header -->
 <h1>
 	<img src={logo_img} alt = "wynton"
