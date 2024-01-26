@@ -5,8 +5,7 @@
     let lines = [];
     let word_file_lines = 10000;
     let word_amount = 25;
-  
-    let word_string = ""; 
+
   
   // take user input -> # of characters intered = letter tag 
   //update from there
@@ -43,6 +42,11 @@
 
     return matchedLetters.join(' ');
   }
+
+    function appendWord(word){
+      word_string += word
+    }
+  $: word_string = "";
     
 </script>
   
@@ -57,11 +61,11 @@
         </letter>
         {/each}
       </div>
+      <!-- <br> -->
     {/each}
-    {#if !lines.length}Brrrr...{/if}
+    {#if !lines.length}Loading{/if}
 </div>
 
-  
   <style>
     .word-box {
       display: flex;
@@ -75,6 +79,7 @@
         font-size: xx-large;
 
     }
+ 
   
   
     .loading {
