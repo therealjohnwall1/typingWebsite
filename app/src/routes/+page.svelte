@@ -12,7 +12,7 @@
 	const num_lines = 10000
     const num_blocks = 25; // Define the number of blocks you want to create
 
-    import main_words from "$lib/words/top1kwords.txt"
+    // import main_words from "$lib/words/top1kwords.txt"
 </script>
 
 <svelte:head>

@@ -10,19 +10,42 @@
   // take user input -> # of characters intered = letter tag 
   //update from there
     onMount(async () => {
-      const text = await fetch(main_words).then(res => res.text());
-      lines = text.split('\n');
+      console.log(`Mounting to DOM`)
       
+      lines = get_words(main_words);
+
+      // document.addEventListener('click', onClickDocument, {
+			// capture: true});
+
     });
+    function get_words(path){
+      
+      const fileInput = document.getElementsByID(path);
+
+      let lines = text.split('\n');
+      let index = 0;
+      let prompt = [];
+      for(let i = 0; i< word_amount;i++){
+        index = Math.random() * (word_file_lines);
+        prompt += lines[index];
+        prompt += " ";
+      }
+      console.log(prompt);
+      return prompt;
+      
+    }
 
     const add_string = (word) => {word_string += word; return word_string}
     const reset = () => {word_string = ""; return ""}
 
     function handle_keydown(event) {
       const keyPressed = event.key;
+      console.log(`User input:${keyPressed}`)
       userInput += keyPressed;
       updateWordStyles();
-  }
+    }
+
+    // Add event listener to capture keydown events
   function updateWordStyles() {
     // Update the styles based on userInput
     lines = lines.map(word => ({
@@ -43,20 +66,25 @@
     return matchedLetters.join(' ');
   }
 
-    function appendWord(word){
-      word_string += word
-    }
+
   $: word_string = "";
+
+  let user_input = "";
     
 </script>
   
-  
+
+<!-- <svelte:body on:focus={}/> -->
+
+
+
 <!-- svelte-ignore a11y-no-static-element-interactions -->
+
 <div class="word-box" class:loading={!lines.length} on:keydown={handle_keydown} tabindex=-1>
-    {#each lines.slice(0, 25).sort(() => Math.random() - 0.5) as word}
-      <div class="word">
+    {#each lines as word,index}
+      <div class="word 21savage">
         {#each word as letter}
-        <letter class = {letter}>
+        <letter class = {index}>
           {letter}
         </letter>
         {/each}
@@ -65,6 +93,11 @@
     {/each}
     {#if !lines.length}Loading{/if}
 </div>
+
+
+<!-- <label>
+  <input bind:value={user_input}>
+</label> -->
 
   <style>
     .word-box {
