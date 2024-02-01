@@ -19,7 +19,7 @@ def wordbank():
     bank_size = 25
     lines = word_db.readlines()         
     word_bank = [lines[random.randint(0,DB_SIZE-1)] for i in range(bank_size)]
-    word_bank = list(map(str.strip, word_bank))    # strip new lines
+    word_bank = list(map(str.strip , word_bank))    # strip new lines
 
     return word_bank
 
