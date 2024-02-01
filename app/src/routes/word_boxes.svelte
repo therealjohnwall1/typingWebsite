@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import main_words from '$lib/words/top1kwords.txt';
+    // import main_words from '$lib/words/top1kwords.txt';
   
     let lines = [];
     let word_file_lines = 10000;
