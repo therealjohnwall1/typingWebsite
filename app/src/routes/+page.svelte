@@ -10,7 +10,7 @@
     let WORD_AMT = 25;
     const back_domain = "http://localhost:8000";
     let word_promise;
-	let word_bank;
+	let word_bank = [];
     console.log("innitalizing word bank");
 
     onMount(async () => {
@@ -59,8 +59,14 @@
 		await get_words();
 	}
 	function testStatus(){
+		console.log(word_bank);
 		console.log(typeof word_bank);
 	}
+
+
+
+
+
 
 </script>
 
@@ -81,17 +87,26 @@
 		<img src={crown_img} alt="button for leaderboards" 
 		width = 35/>
 	</button>
-		
+	<button on:click = {testStatus}>
+		testing
+	</button>
 	</span>
 </h1>
 
-<!-- <div>
-	{#each word_bank as word}
-		{#each word as letter}
-			<letter> {letter} </letter>
+<div>
+
+	<div class="word-container">
+		{#each word_bank as word}
+			<div class="word">
+				{#each word as letter}
+					<letter> 
+						{letter}
+					</letter>
+				{/each}
+			</div>
 		{/each}
-	{/each}
-</div> -->
+	</div>
+</div>
 
 <style>
 	h1{
@@ -99,6 +114,22 @@
 		font-family: 'Gotham';
 		font-size: 1.75em;
 		font-weight: 600;
+	}
+	.word-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+	
+	}
+
+	.word {
+		font-size: 1.75em;
+		font-weight: 450;
+		margin-right: 10px;
+		margin-bottom: 10px;
+		color: rgb(139, 59, 59);
+		font-family: 'Gotham';
 	}
 
 	
