@@ -17,8 +17,8 @@
 		word:0,
 		letter:0
 	};
-
-
+	let timer = 0; //measured in seconds 
+	//add timer function 
 
     onMount(async () => {
         console.log(`Mounting dom`)
@@ -29,7 +29,14 @@
 		wordContainer.focus();
     });
 
-	//watch promise tutorial on yt
+	//timer functions
+
+	function time(){
+
+	}
+
+
+	// pulling data for words
     async function get_words(){
         const params = {
             size: WORD_AMT
@@ -68,60 +75,44 @@
 		console.log(typeof word_bank);
 	}
 
-	// event listeners
-	function keyDown(event){
-		console.log(event.key); 
-		// const currWord = word_bank[caretIndex.word];
-		
-		let currentWord = word_bank[caretIndex.word] 
-		if (currentWord) {
-			const typedChar = event.key.toLowerCase();
-			const currentChar = currentWord[currentWord.length - 1].toLowerCase();
 
-			if (typedChar === currentChar) {
-				caretIndex.letter++;
+
+	// event listeners
+
+	//make sure to add spaces between the words when typing 
+	function keyDown(event){		
+		let currentWord = word_bank[caretIndex.word];
+		let currentChar = currentWord[currentWord.length - 1];
+
+		if (event.key === 'Backspace' || event.key === 'Delete'){
+			caretIndex.letter--;
+				if(caretIndex.letter === 0){
+					caretIndex.word--;
+					caretIndex.letter = word_bank[caretIndex.word].length;
+				}
+		}
+		else{
+			if(event.key === currentChar){
+				console.log("it should be moving");
+				//set it to green
 			}
-			if (caretIndex.letter >= currentWord.length) {
+			else{
+				//set it to red
+			}
+			caretIndex.letter++;
+			if(caretIndex.letter === currentWord.length){
+				console.log(caretIndex);
+				caretIndex.word++;
 				caretIndex.letter = 0;
-				currentWord++;
-				// next word
 			}
-    	}
+		}
 	}
 
-	// document.addEventListener('keydown', keyDown);
-	
-	function handleKeyDown(event) {
-    if (event.key.length === 1) {
-      // Only handle single character keys (letters, numbers, etc.)
-      const pressedLetter = event.key.toUpperCase();
-
-      const currentWord = word_bank[caretIndex.word];
-      const currentLetter = currentWord[caretIndex.letter];
-
-      if (pressedLetter === currentLetter) {
-        // Handle correct key press
-        console.log('Correct key pressed!');
-        caretIndex.letter++;
-
-        if (caretIndex.letter >= currentWord.length) {
-          // Move to the next word when reaching the end of the current word
-          caretIndex.word++;
-          caretIndex.letter = 0;
-        }
-		// Add logic for when all words are completed
-        if (caretIndex.word >= word_bank.length) {
-          console.log('All words completed!');
-          // Reset the caretIndex or perform other actions as needed
-        }
-      } else {
-        // Handle incorrect key press
-        console.log('Incorrect key pressed!');
-        // Add logic for incorrect input if needed
-      }
-    }
-  }
-
+	//changing word amt in query
+	function changeWords(amt){
+		WORD_AMT = amt;
+		resetWords();
+	}
 </script>
 
 <svelte:head>
@@ -140,7 +131,27 @@
 	</span>
 </h1>
 
+<h3 class = "query_settings">
+	<span>
+		<button on:click={changeWords(15)}>
+			15
+		</button>
 
+		<button on:click={changeWords(25)}>
+			25
+		</button>
+
+		<button on:click={changeWords(50)}>
+			50
+		</button>
+
+		<button on:click={changeWords(100)}>
+			100
+		</button>
+	</span>
+</h3>
+
+<!-- add autofocus onto button and change the color to more natural -->
 <button class="word-container" bind:this ={wordContainer} on:keydown={keyDown}>
 		{#each word_bank as word, i}
 			<div class="word">
@@ -167,7 +178,6 @@
 	</button>
 </div>
 
-
 <style>
 	h1{
 		color: #FAD5A5;
@@ -189,7 +199,8 @@
 		justify-content: center;
 		align-items: center;
 		margin-right: 170px;
-		margin-left: 170px; 
+		margin-left: 170px;
+		background-color: #12343b,; /* Change the background color to your desired color */
 	}
 
 	.word {
@@ -212,7 +223,6 @@
 		 */
 	}
 
-	
 
 	:global(body) { 
 		background-color: #12343b;
