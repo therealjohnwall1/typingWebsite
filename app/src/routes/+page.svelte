@@ -16,9 +16,7 @@
 	let caretIndex = {
 		word:0,
 		letter:0
-	};
-	let timer = 0; //measured in seconds 
-	//add timer function 
+	}; 
 
     onMount(async () => {
         console.log(`Mounting dom`)
@@ -29,10 +27,16 @@
 		wordContainer.focus();
     });
 
-	//timer functions
 
-	function time(){
+	let clear;
+	let seconds = 0; //measured in seconds 
+	function increment(){
+		seconds+=1;
+	}
 
+	$:{
+		clearInterval(clear);
+		clear = setInterval(increment, seconds);
 	}
 
 
@@ -84,6 +88,9 @@
 		let currentWord = word_bank[caretIndex.word];
 		let currentChar = currentWord[currentWord.length - 1];
 
+		if(caretIndex.word === 0 && caretIndex.letter == 0){
+			//timer start 
+		}
 		if (event.key === 'Backspace' || event.key === 'Delete'){
 			caretIndex.letter--;
 				if(caretIndex.letter === 0){
@@ -91,6 +98,7 @@
 					caretIndex.letter = word_bank[caretIndex.word].length;
 				}
 		}
+		
 		else{
 			if(event.key === currentChar){
 				console.log("it should be moving");
@@ -118,6 +126,9 @@
 <svelte:head>
 	<title> Typing Site idk</title>
 </svelte:head>
+
+
+<input type = 'number' bind:value = {seconds}>
 
 <h1>
 	<span>
