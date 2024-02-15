@@ -1,4 +1,5 @@
 <script>
+
 	// Images
 	import reload_img from "$lib/imgs/reset.png"
 	import crown_img from "$lib/imgs/leaderboard.png"
@@ -17,6 +18,7 @@
 		word:0,
 		letter:0
 	}; 
+	let word_correct; 
 
     onMount(async () => {
         console.log(`Mounting dom`)
@@ -78,9 +80,6 @@
 		console.log(word_bank);
 		console.log(typeof word_bank);
 	}
-
-
-
 	// event listeners
 
 	//make sure to add spaces between the words when typing 
@@ -114,6 +113,7 @@
 				caretIndex.letter = 0;
 			}
 		}
+
 	}
 
 	//changing word amt in query
@@ -121,18 +121,23 @@
 		WORD_AMT = amt;
 		resetWords();
 	}
+
+
+	function calcWpm(time){
+		return WORD_AMT/time;
+	}
+
 </script>
 
 <svelte:head>
 	<title> Typing Site idk</title>
 </svelte:head>
 
-
 <input type = 'number' bind:value = {seconds}>
 
 <h1>
 	<span>
-	<button>
+	<button >
 		<img src={crown_img} alt="button for leaderboards" 
 		width = 35/>
 	</button>
@@ -144,19 +149,19 @@
 
 <h3 class = "query_settings">
 	<span>
-		<button on:click={changeWords(15)}>
+		<button class = "change_words" on:click={changeWords(15)}>
 			15
 		</button>
 
-		<button on:click={changeWords(25)}>
+		<button class = "change_words" on:click={changeWords(25)}>
 			25
 		</button>
 
-		<button on:click={changeWords(50)}>
+		<button class = "change_words" on:click={changeWords(50)}>
 			50
 		</button>
 
-		<button on:click={changeWords(100)}>
+		<button class = "change_words" on:click={changeWords(100)}>
 			100
 		</button>
 	</span>
@@ -169,7 +174,9 @@
 				{#each word as letter, j}
 				{#if i === caretIndex.word && caretIndex.letter === j }
 					<letter class = "selectedLetter">
-						<span style="display: inline-block; border-right: padding-right: 100px; color: yellow; font-weight: bold; height: 20px;">|</span>{letter}
+						<span style="display: inline-block; border-right: padding-right: 100px; color: yellow; font-weight: bold; height: 20px;">|
+						</span>{letter}
+
 					</letter>
 				{:else}	
 					<letter>
@@ -191,7 +198,7 @@
 
 <style>
 	h1{
-		color: #FAD5A5;
+		color: #3500D3;
 		font-family: 'Gotham';
 		font-size: 3em;
 		font-weight: 600;
@@ -211,15 +218,25 @@
 		align-items: center;
 		margin-right: 170px;
 		margin-left: 170px;
-		background-color: #12343b,; /* Change the background color to your desired color */
+		/* color: #12343b; */
+		background-color: #282828;
+		padding: 0;
+		border: #282828;
+
+		
+		 /* Change the background color to your desired color */
 	}
 
+	.change_words{
+		background-color: #5930d3;
+		border: #282828;
+	}
 	.word {
-		font-size: 2.15em;
+		font-size: 3em;
 		font-weight: 450;
 		margin-right: 10px;
 		margin-bottom: 10px;
-		color: #e1b382;
+		color: #5930d3;
 		font-family: 'Gotham';
 	}
 	.correct{
@@ -229,13 +246,12 @@
 		color:#c22a2a
 	}
 	.selectedLetter {
-		/* background-color: rgb(110, 214, 133);
+		/* background-color: rgb(252, 252, 252); */
 		border-radius: 20px;
-		 */
-	}
+	}  
 
 
 	:global(body) { 
-		background-color: #12343b;
+		background-color: #282828;
   }
 </style>
